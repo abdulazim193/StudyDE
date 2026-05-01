@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyDE — German University Explorer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0b0f;
+  --surface: #12141a;
+  --card: #181b24;
+  --card-hover: #1e2230;
+  --border: #252836;
+  --border-subtle: #1c1f2a;
+  --accent: #4f8ef7;
+  --accent2: #7c5fe6;
+  --accent3: #36d9b4;
+  --accent4: #f7934f;
+  --text: #e8eaf0;
+  --text-muted: #7a7f96;
+  --text-dim: #4a4f66;
+  --nc-free: #36d9b4;
+  --nc: #f7934f;
+  --assess: #e85f8a;
+  --winter: #4f8ef7;
+  --summer: #f7c94f;
+  --both: #7c5fe6;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* HEADER */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(10,11,15,0.9);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0 2rem;
+}
+.header-inner {
+  max-width: 1600px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 60px;
+}
+.logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800; font-size: 1.4rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  letter-spacing: -0.03em;
+}
+.logo span { color: var(--accent3); -webkit-text-fill-color: var(--accent3); }
+.header-stats {
+  display: flex; gap: 2rem; align-items: center;
+}
+.hstat { text-align: center; }
+.hstat-num {
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: 1.1rem; color: var(--accent); display: block;
+}
+.hstat-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* HERO */
+.hero {
+  padding: 4rem 2rem 2rem;
+  max-width: 1600px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
+  align-items: center;
+}
+.hero-title {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  line-height: 1.1; letter-spacing: -0.04em;
+  margin-bottom: 1rem;
+}
+.hero-title .line2 {
+  background: linear-gradient(135deg, var(--accent), var(--accent3));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero-sub { color: var(--text-muted); font-size: 1rem; max-width: 420px; margin-bottom: 2rem; }
+.hero-pills { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.pill {
+  padding: 0.35rem 0.8rem; border-radius: 100px;
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.pill-blue { background: rgba(79,142,247,0.15); color: var(--accent); border: 1px solid rgba(79,142,247,0.25); }
+.pill-green { background: rgba(54,217,180,0.15); color: var(--accent3); border: 1px solid rgba(54,217,180,0.25); }
+.pill-purple { background: rgba(124,95,230,0.15); color: var(--accent2); border: 1px solid rgba(124,95,230,0.25); }
+
+/* STATS CARDS */
+.stats-row {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;
+}
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px; padding: 1.2rem 1.4rem;
+  position: relative; overflow: hidden;
+}
+.stat-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+}
+.stat-card:nth-child(1)::before { background: linear-gradient(90deg, var(--accent), transparent); }
+.stat-card:nth-child(2)::before { background: linear-gradient(90deg, var(--nc-free), transparent); }
+.stat-card:nth-child(3)::before { background: linear-gradient(90deg, var(--accent2), transparent); }
+.stat-card:nth-child(4)::before { background: linear-gradient(90deg, var(--accent4), transparent); }
+.stat-num {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: 2rem; letter-spacing: -0.04em;
+}
+.stat-label { color: var(--text-muted); font-size: 0.78rem; margin-top: 0.2rem; }
+
+/* CONTROLS */
+.controls-bar {
+  max-width: 1600px; margin: 0 auto 1.5rem;
+  padding: 0 2rem;
+  display: flex; flex-direction: column; gap: 1rem;
+}
+.search-row {
+  display: flex; gap: 1rem; align-items: center;
+}
+.search-wrap {
+  position: relative; flex: 1;
+}
+.search-icon {
+  position: absolute; left: 1rem; top: 50%; transform: translateY(-50%);
+  color: var(--text-muted); font-size: 1rem; pointer-events: none;
+}
+#searchInput {
+  width: 100%; background: var(--card);
+  border: 1px solid var(--border); border-radius: 12px;
+  padding: 0.75rem 1rem 0.75rem 2.8rem;
+  color: var(--text); font-family: inherit; font-size: 0.9rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+#searchInput:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(79,142,247,0.1); }
+#searchInput::placeholder { color: var(--text-dim); }
+
+.view-toggle {
+  display: flex; gap: 0.3rem;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 0.3rem;
+}
+.view-btn {
+  background: none; border: none; cursor: pointer;
+  padding: 0.4rem 0.8rem; border-radius: 7px;
+  color: var(--text-muted); font-size: 1rem;
+  transition: all 0.2s;
+}
+.view-btn.active { background: var(--accent); color: white; }
+
+.filters-row {
+  display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;
+}
+.filter-group { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.filter-label {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text-muted); padding: 0.5rem 0;
+  white-space: nowrap;
+}
+.filter-chip {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 8px; padding: 0.4rem 0.9rem;
+  font-size: 0.78rem; color: var(--text-muted);
+  cursor: pointer; transition: all 0.18s;
+  white-space: nowrap;
+}
+.filter-chip:hover { border-color: var(--accent); color: var(--accent); }
+.filter-chip.active { background: var(--accent); border-color: var(--accent); color: white; }
+.filter-chip.green.active { background: var(--nc-free); border-color: var(--nc-free); color: #0a0b0f; }
+.filter-chip.orange.active { background: var(--nc); border-color: var(--nc); color: white; }
+.filter-chip.winter.active { background: var(--winter); border-color: var(--winter); color: white; }
+.filter-chip.summer.active { background: var(--summer); border-color: var(--summer); color: #0a0b0f; }
+.filter-chip.purple.active { background: var(--accent2); border-color: var(--accent2); color: white; }
+
+select.filter-select {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 8px; padding: 0.4rem 0.9rem;
+  font-size: 0.78rem; color: var(--text);
+  cursor: pointer; outline: none;
+  font-family: inherit;
+}
+select.filter-select:focus { border-color: var(--accent); }
+
+.results-meta {
+  max-width: 1600px; margin: 0 auto 1rem;
+  padding: 0 2rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.results-count { color: var(--text-muted); font-size: 0.82rem; }
+.results-count span { color: var(--text); font-weight: 600; }
+.sort-row { display: flex; gap: 0.5rem; align-items: center; }
+.sort-label { font-size: 0.75rem; color: var(--text-muted); }
+
+/* GRID */
+.grid-container {
+  max-width: 1600px; margin: 0 auto;
+  padding: 0 2rem 4rem;
+}
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+  gap: 1.25rem;
+}
+.cards-grid.list-view {
+  grid-template-columns: 1fr;
+}
+
+/* UNIVERSITY CARD */
+.uni-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  position: relative;
+  animation: fadeUp 0.3s ease both;
+  cursor: pointer;
+}
+.uni-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  border-color: rgba(79,142,247,0.3);
+}
+.uni-card.bookmarked { border-color: rgba(247,147,79,0.4); }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card-top {
+  padding: 1.2rem 1.4rem 0.8rem;
+  position: relative;
+}
+.card-uni-name {
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: 0.95rem; color: var(--text);
+  margin-bottom: 0.25rem;
+  padding-right: 3rem;
+}
+.card-course {
+  font-size: 0.82rem; color: var(--text-muted);
+  margin-bottom: 0.9rem; padding-right: 3rem;
+}
+.card-actions {
+  position: absolute; top: 1rem; right: 1rem;
+  display: flex; gap: 0.3rem;
+}
+.icon-btn {
+  background: var(--surface); border: 1px solid var(--border-subtle);
+  border-radius: 8px; width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 0.85rem; transition: all 0.15s;
+  color: var(--text-muted);
+}
+.icon-btn:hover { border-color: var(--accent); color: var(--accent); }
+.icon-btn.bookmarked-btn { color: var(--accent4); border-color: rgba(247,147,79,0.4); }
+
+.badges {
+  display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.8rem;
+}
+.badge {
+  padding: 0.18rem 0.6rem;
+  border-radius: 6px; font-size: 0.68rem;
+  font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em;
+}
+.badge-ncfree { background: rgba(54,217,180,0.15); color: var(--nc-free); }
+.badge-nc { background: rgba(247,147,79,0.15); color: var(--nc); }
+.badge-assess { background: rgba(232,95,138,0.15); color: var(--assess); }
+.badge-winter { background: rgba(79,142,247,0.12); color: var(--winter); }
+.badge-summer { background: rgba(247,201,79,0.15); color: var(--summer); }
+.badge-both { background: rgba(124,95,230,0.15); color: var(--accent2); }
+.badge-dorm { background: rgba(54,217,180,0.1); color: var(--accent3); }
+.badge-nodorm { background: rgba(247,79,79,0.1); color: #f77979; }
+.badge-motiv { background: rgba(124,95,230,0.12); color: var(--accent2); }
+.badge-late { background: rgba(79,142,247,0.1); color: #a8c4ff; }
+.badge-online { background: rgba(120,120,180,0.15); color: #a0a0cc; }
+
+.card-divider { height: 1px; background: var(--border-subtle); margin: 0 1.4rem; }
+
+.card-details {
+  padding: 0.8rem 1.4rem 1.2rem;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem;
+}
+.detail-item { }
+.detail-key { font-size: 0.65rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.1rem; }
+.detail-val { font-size: 0.8rem; color: var(--text); font-weight: 500; }
+.detail-val.highlight { color: var(--accent3); }
+.detail-val.fee { color: var(--accent4); }
+
+.card-footer {
+  padding: 0.6rem 1.4rem 1rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.deadline-display {
+  display: flex; align-items: center; gap: 0.4rem;
+  font-size: 0.78rem; color: var(--text-muted);
+}
+.deadline-display .deadline-icon { font-size: 0.85rem; }
+.deadline-urgent { color: var(--nc); }
+
+/* LIST VIEW CARD */
+.cards-grid.list-view .uni-card .card-details {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* EMPTY STATE */
+.empty-state {
+  text-align: center; padding: 5rem 2rem;
+  color: var(--text-muted);
+}
+.empty-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.4; }
+.empty-title { font-family: 'Syne', sans-serif; font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--text); }
+.empty-sub { font-size: 0.85rem; }
+
+/* MODAL */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,0.8); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 2rem;
+  opacity: 0; pointer-events: none; transition: opacity 0.25s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 20px; max-width: 660px; width: 100%;
+  max-height: 85vh; overflow-y: auto;
+  transform: scale(0.95); transition: transform 0.25s;
+}
+.modal-overlay.open .modal { transform: scale(1); }
+.modal-header {
+  padding: 1.8rem 2rem 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+  position: sticky; top: 0; background: var(--card); z-index: 1;
+}
+.modal-uni { font-size: 0.8rem; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem; }
+.modal-course { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.4rem; margin-bottom: 0.8rem; }
+.modal-close {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; width: 32px; height: 32px;
+  cursor: pointer; color: var(--text-muted);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; transition: all 0.15s;
+}
+.modal-close:hover { border-color: var(--accent); color: var(--accent); }
+.modal-body { padding: 1.5rem 2rem; }
+.modal-section { margin-bottom: 1.5rem; }
+.modal-section-title {
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--text-muted); margin-bottom: 0.8rem;
+  padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-subtle);
+}
+.modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.modal-field { }
+.modal-field-key { font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.2rem; }
+.modal-field-val { font-size: 0.9rem; color: var(--text); }
+.modal-field-val.accent { color: var(--accent); }
+.modal-field-val.green { color: var(--nc-free); }
+.modal-field-val.orange { color: var(--nc); }
+.modal-note {
+  background: rgba(79,142,247,0.08); border: 1px solid rgba(79,142,247,0.15);
+  border-radius: 10px; padding: 0.8rem 1rem;
+  font-size: 0.82rem; color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+.modal-note strong { color: var(--accent); }
+
+/* COMPARE BAR */
+.compare-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 150;
+  background: var(--surface); border-top: 1px solid var(--border);
+  padding: 1rem 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  transform: translateY(100%); transition: transform 0.3s;
+}
+.compare-bar.visible { transform: translateY(0); }
+.compare-items { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.compare-item {
+  background: var(--card); border: 1px solid var(--accent);
+  border-radius: 8px; padding: 0.3rem 0.8rem;
+  font-size: 0.78rem; color: var(--text);
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.compare-item-remove {
+  cursor: pointer; color: var(--text-muted);
+  transition: color 0.15s; font-size: 0.8rem;
+}
+.compare-item-remove:hover { color: var(--assess); }
+.compare-actions { display: flex; gap: 0.75rem; align-items: center; }
+.btn {
+  padding: 0.6rem 1.4rem; border-radius: 10px;
+  font-family: inherit; font-size: 0.83rem; font-weight: 600;
+  cursor: pointer; transition: all 0.18s;
+  border: none;
+}
+.btn-primary { background: var(--accent); color: white; }
+.btn-primary:hover { background: #6a9fff; }
+.btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text-muted); }
+.btn-ghost:hover { border-color: var(--text); color: var(--text); }
+
+/* COMPARE MODAL */
+.compare-table { width: 100%; border-collapse: collapse; }
+.compare-table th, .compare-table td {
+  padding: 0.6rem 0.8rem; text-align: left;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.82rem;
+}
+.compare-table th { color: var(--text-muted); font-weight: 500; width: 130px; }
+.compare-table td { color: var(--text); }
+.compare-table tr:last-child th, .compare-table tr:last-child td { border-bottom: none; }
+
+/* TOOLTIP */
+.tooltip-wrap { position: relative; display: inline-block; }
+.tooltip-text {
+  visibility: hidden; opacity: 0;
+  position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%);
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; padding: 0.3rem 0.6rem;
+  font-size: 0.7rem; color: var(--text); white-space: nowrap;
+  transition: opacity 0.15s; pointer-events: none; z-index: 50;
+}
+.tooltip-wrap:hover .tooltip-text { visibility: visible; opacity: 1; }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: repeat(4, 1fr); }
+  .header-stats { display: none; }
+  .cards-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .hero { padding: 2rem 1rem 1rem; }
+  .controls-bar, .results-meta, .grid-container { padding-left: 1rem; padding-right: 1rem; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+}
+
+.application-status {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  padding: 0.15rem 0.55rem; border-radius: 5px;
+  font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+}
+.status-not-started { background: rgba(100,100,120,0.2); color: var(--text-muted); }
+.status-in-progress { background: rgba(79,142,247,0.2); color: var(--accent); }
+.status-submitted { background: rgba(54,217,180,0.2); color: var(--nc-free); }
+.status-accepted { background: rgba(54,217,100,0.2); color: #54d964; }
+.status-rejected { background: rgba(247,79,79,0.2); color: #f74f4f; }
+
+.notes-area {
+  width: 100%; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 0.5rem 0.8rem;
+  color: var(--text); font-family: inherit; font-size: 0.82rem;
+  resize: vertical; min-height: 60px; outline: none;
+  transition: border-color 0.2s;
+}
+.notes-area:focus { border-color: var(--accent); }
+
+.tag { display: inline-block; margin-right: 0.3rem; }
+
+.highlight-row { background: rgba(79,142,247,0.04); }
+
+/* Progress indicator */
+.progress-ring-wrap { display: flex; align-items: center; gap: 0.6rem; }
+.progress-bar-track {
+  flex: 1; height: 4px; background: var(--border-subtle);
+  border-radius: 2px; overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%; border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent3));
+  transition: width 0.4s ease;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">Study<span>DE</span></div>
+    <div class="header-stats">
+      <div class="hstat"><span class="hstat-num" id="hTotalUni">0</span><span class="hstat-label">Universities</span></div>
+      <div class="hstat"><span class="hstat-num" id="hTotalCourses">0</span><span class="hstat-label">Courses</span></div>
+      <div class="hstat"><span class="hstat-num" id="hNcFree">0</span><span class="hstat-label">NC Free</span></div>
+      <div class="hstat"><span class="hstat-num" id="hBookmarked">0</span><span class="hstat-label">Saved</span></div>
+    </div>
+  </div>
+</header>
+
+<div style="max-width:1600px;margin:0 auto;">
+<div class="hero">
+  <div>
+    <div class="hero-pills" style="margin-bottom:1rem;">
+      <span class="pill pill-blue">🇩🇪 Germany</span>
+      <span class="pill pill-green">English Taught</span>
+      <span class="pill pill-purple">International</span>
+    </div>
+    <h1 class="hero-title">Find Your<br><span class="line2">Dream University</span><br>in Germany</h1>
+    <p class="hero-sub">Explore, filter, compare and track applications to German universities offering English-taught bachelor programmes for international students.</p>
+  </div>
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-num" id="statTotal" style="color:var(--accent)">—</div>
+      <div class="stat-label">Total Courses</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="statNCFree" style="color:var(--nc-free)">—</div>
+      <div class="stat-label">NC Free Courses</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="statDorm" style="color:var(--accent2)">—</div>
+      <div class="stat-label">Dorm Available</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="statLate" style="color:var(--accent4)">—</div>
+      <div class="stat-label">Late Arrival OK</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="controls-bar">
+  <div class="search-row">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="Search by university name, course, or any detail…">
+    </div>
+    <div class="view-toggle">
+      <button class="view-btn active" id="btnGrid" onclick="setView('grid')" title="Grid view">▦</button>
+      <button class="view-btn" id="btnList" onclick="setView('list')" title="List view">☰</button>
+    </div>
+  </div>
+
+  <div class="filters-row">
+    <span class="filter-label">Admission:</span>
+    <div class="filter-group" id="ncFilter">
+      <button class="filter-chip green" data-filter="nc" data-val="all" onclick="toggleFilter(this,'nc')">All</button>
+      <button class="filter-chip green" data-filter="nc" data-val="ncfree" onclick="toggleFilter(this,'nc')">NC Free</button>
+      <button class="filter-chip orange" data-filter="nc" data-val="nc" onclick="toggleFilter(this,'nc')">NC Required</button>
+      <button class="filter-chip" data-filter="nc" data-val="assess" onclick="toggleFilter(this,'nc')">Assessment / Other</button>
+    </div>
+
+    <span class="filter-label" style="margin-left:0.5rem">Session:</span>
+    <div class="filter-group" id="sessionFilter">
+      <button class="filter-chip" data-filter="session" data-val="all" onclick="toggleFilter(this,'session')">All</button>
+      <button class="filter-chip winter" data-filter="session" data-val="winter" onclick="toggleFilter(this,'session')">❄ Winter</button>
+      <button class="filter-chip summer" data-filter="session" data-val="summer" onclick="toggleFilter(this,'session')">☀ Summer</button>
+      <button class="filter-chip purple" data-filter="session" data-val="both" onclick="toggleFilter(this,'session')">Both</button>
+    </div>
+
+    <span class="filter-label" style="margin-left:0.5rem">Extras:</span>
+    <div class="filter-group">
+      <button class="filter-chip" data-filter="extra" data-val="dorm" onclick="toggleExtra(this)">🏠 Dorm</button>
+      <button class="filter-chip" data-filter="extra" data-val="late" onclick="toggleExtra(this)">⏰ Late Arrival</button>
+      <button class="filter-chip" data-filter="extra" data-val="motiv" onclick="toggleExtra(this)">✉ Motivation Letter</button>
+      <button class="filter-chip" data-filter="extra" data-val="bookmarked" onclick="toggleExtra(this)">⭐ Saved</button>
+    </div>
+
+    <select class="filter-select" id="sortSelect" onchange="renderCards()">
+      <option value="default">Sort: Default</option>
+      <option value="uni">Sort: University A-Z</option>
+      <option value="course">Sort: Course A-Z</option>
+      <option value="fee-asc">Sort: Fee Low→High</option>
+      <option value="fee-desc">Sort: Fee High→Low</option>
+    </select>
+  </div>
+</div>
+
+<div class="results-meta">
+  <div class="results-count">Showing <span id="resultCount">0</span> results</div>
+  <div style="display:flex;gap:0.5rem;align-items:center;">
+    <span style="font-size:0.78rem;color:var(--text-muted)">Compare mode</span>
+    <button class="btn btn-ghost" style="padding:0.35rem 0.8rem;font-size:0.75rem;" onclick="clearCompare()">Clear</button>
+  </div>
+</div>
+
+<div class="grid-container">
+  <div class="cards-grid" id="cardsGrid"></div>
+  <div class="empty-state" id="emptyState" style="display:none;">
+    <div class="empty-icon">🔭</div>
+    <div class="empty-title">No results found</div>
+    <div class="empty-sub">Try adjusting your search or filters</div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modalBox">
+    <div class="modal-header">
+      <div class="modal-uni" id="mUni"></div>
+      <div class="modal-course" id="mCourse"></div>
+      <div id="mBadges" style="display:flex;gap:0.5rem;flex-wrap:wrap;"></div>
+      <button class="modal-close" onclick="closeModalBtn()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <div class="modal-section-title">📋 Application Details</div>
+        <div class="modal-grid" id="mAppDetails"></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">🌍 Language Requirements</div>
+        <div class="modal-grid" id="mLangDetails"></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">💶 Finances & Housing</div>
+        <div class="modal-grid" id="mFinDetails"></div>
+      </div>
+      <div class="modal-section" id="mNotesSection">
+        <div class="modal-section-title">📝 My Notes & Status</div>
+        <div style="display:flex;gap:0.5rem;margin-bottom:0.6rem;flex-wrap:wrap;">
+          <select id="mStatusSelect" class="filter-select" onchange="saveStatus()">
+            <option value="">— Set Status —</option>
+            <option value="not-started">Not Started</option>
+            <option value="in-progress">In Progress</option>
+            <option value="submitted">Submitted</option>
+            <option value="accepted">Accepted ✓</option>
+            <option value="rejected">Rejected</option>
+          </select>
+        </div>
+        <textarea class="notes-area" id="mNotes" placeholder="Add your personal notes about this university/course…" oninput="saveNote()"></textarea>
+      </div>
+      <div class="modal-section" id="mExtraSection"></div>
+    </div>
+  </div>
+</div>
+
+<!-- COMPARE BAR -->
+<div class="compare-bar" id="compareBar">
+  <div>
+    <div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.4rem;">Comparing <span id="compareCount">0</span> courses</div>
+    <div class="compare-items" id="compareItems"></div>
+  </div>
+  <div class="compare-actions">
+    <button class="btn btn-ghost" onclick="clearCompare()">Clear All</button>
+    <button class="btn btn-primary" onclick="openCompareModal()">Compare Now →</button>
+  </div>
+</div>
+
+<!-- COMPARE MODAL -->
+<div class="modal-overlay" id="compareOverlay" onclick="closeCompareModal(event)">
+  <div class="modal" style="max-width:900px;">
+    <div class="modal-header">
+      <div class="modal-course">Side-by-Side Comparison</div>
+      <button class="modal-close" onclick="document.getElementById('compareOverlay').classList.remove('open')">✕</button>
+    </div>
+    <div class="modal-body" id="compareBody"></div>
+  </div>
+</div>
+
+<script>
+const RAW_DATA = [
+  {u:"Technische Hochschule Ingolstadt",c:"Autonomous Vehicle Engineering",nc:"NC Free",app:"UniAssist",vpd:"VPD",dead:"May 2 – July 15",sess:"Winter",ger:null,ielts:null,late:"Late Arrival 2 semesters",fee:"€872",extra:"Max 2",block:"Half Block & Job Contract",motiv:null,dorm:"NO"},
+  {u:"Technische Hochschule Ingolstadt",c:"Engineering and Management",nc:"NC",app:"UniAssist",vpd:"VPD",dead:"May 2 – July 15",sess:"Winter",ger:null,ielts:null,late:"Late Arrival 2 semesters",fee:"€872",extra:"Max 2",block:"Half Block & Job Contract",motiv:null,dorm:"NO"},
+  {u:"Technische Hochschule Ingolstadt",c:"Computer Science and AI",nc:"NC",app:"UniAssist",vpd:"VPD",dead:"May 2 – July 15",sess:"Winter",ger:null,ielts:null,late:"Late Arrival 2 semesters",fee:"€872",extra:"Max 2",block:"Half Block & Job Contract",motiv:null,dorm:"NO"},
+  {u:"Technische Hochschule Ingolstadt",c:"Sustainable Civil Engineering",nc:"NC Free",app:"UniAssist",vpd:"VPD",dead:"May 2–Jul 15 / Nov 15–Feb 28",sess:"Winter & Summer",ger:null,ielts:null,late:"Late Arrival 2 semesters",fee:"€872",extra:"Max 2",block:"Half Block & Job Contract",motiv:null,dorm:"NO"},
+  {u:"Hochschule Hamm-Lippstadt",c:"Electronic Engineering",nc:"NC Free",app:"UniAssist & University",vpd:"VPD (Another Uni Accept)",dead:"December – July 15",sess:"Winter",ger:null,ielts:"Min 6.0",late:"Late Arrival",fee:"€300 Approx",extra:null,block:"Half Block & Job Contract",motiv:null,dorm:null},
+  {u:"Hochschule Trier",c:"Sustainable Business and Technology",nc:"NC Free",app:"Direct University",vpd:"VPD (Another Uni Accept)",dead:"December – May 15",sess:"Winter",ger:null,ielts:"5.5",late:"Late Arrival 1 semester",fee:"€344",extra:"No limit",block:"Job Contract & Bank Statement",motiv:null,dorm:"YES"},
+  {u:"TH OWL",c:"General Engineering",nc:"NC Free",app:"UniAssist & University",vpd:"VPD (Another Uni Accept)",dead:"Jan 1–Jul 15 / May 2–Oct 15",sess:"Winter",ger:"A1",ielts:"B2",late:null,fee:"€350 Approx",extra:"3 semesters",block:null,motiv:null,dorm:null},
+  {u:"Hochschule Weihenstephan-Triesdorf",c:"Applied Informatics",nc:"NC Free",app:"UniAssist & University",vpd:"VPD",dead:"April 29 – July 15",sess:"Winter",ger:"A1",ielts:"B2",late:null,fee:"€70 Approx",extra:"Max 2",block:null,motiv:null,dorm:null},
+  {u:"Hochschule Merseburg",c:"Engineering and Management",nc:"NC Free",app:"UniAssist & University",vpd:"VPD (Another Uni Accept)",dead:"1 May – 31 August",sess:"Winter",ger:null,ielts:"Min 6.0",late:"Late Arrival",fee:"€280 Approx",extra:"6 semesters",block:null,motiv:null,dorm:"YES"},
+  {u:"OTH Regensburg",c:"International Computer Science",nc:"NC",app:"UniAssist & University",vpd:"VPD (Another Uni Accept)",dead:"1 May – 15 July",sess:"Winter",ger:null,ielts:"Min 5.0 (each section 4.0)",late:"Late Arrival & Hybrid 1 sem",fee:"€681",extra:"No limit",block:"7k Euro bank show",motiv:null,dorm:"YES"},
+  {u:"Hochschule Rhein-Waal",c:"Infotronic Systems Engineering",nc:"NC",app:"UniAssist",vpd:"Online-only",dead:"April – 15 July",sess:"Winter",ger:null,ielts:"B2",late:"Late Arrival",fee:"€300 Approx",extra:"13 semesters",block:null,motiv:null,dorm:"YES"},
+  {u:"Hochschule Rhein-Waal",c:"Engineering",nc:"NC Free",app:"UniAssist",vpd:"Online-only",dead:"April – 15 July",sess:"Winter",ger:null,ielts:"B2",late:"Late Arrival",fee:"€300 Approx",extra:"13 semesters",block:null,motiv:null,dorm:null},
+  {u:"Hochschule Rhein-Waal",c:"Environment and Energy",nc:"NC Free",app:"UniAssist",vpd:"Online-only",dead:"April – 15 July",sess:"Winter & Summer",ger:null,ielts:"B2",late:"Late Arrival",fee:"€300 Approx",extra:"13 semesters",block:null,motiv:null,dorm:null},
+  {u:"Hochschule Bielefeld",c:"Industrial Engineering",nc:"NC",app:"UniAssist & University",vpd:"VPD",dead:"2 May – 15 July",sess:"Winter",ger:null,ielts:"5.5",late:"Yes (no doc needed)",fee:"€198",extra:"No limit",block:null,motiv:null,dorm:null},
+  {u:"Hochschule Bielefeld",c:"Mechatronics and Automation",nc:"NC",app:"UniAssist & University",vpd:"VPD",dead:"2 May – 15 July",sess:"Winter",ger:null,ielts:"5.5",late:"Yes (no doc needed)",fee:"€198",extra:"No limit",block:null,motiv:null,dorm:null},
+  {u:"Technische Hochschule Deggendorf",c:"Artificial Intelligence",nc:"Assessment Test",app:"Direct University",vpd:null,dead:"15 April – 15 June",sess:"Winter",ger:null,ielts:"B2",late:null,fee:"€582",extra:"Max 2",block:null,motiv:null,dorm:"YES"},
+  {u:"Technische Hochschule Deggendorf",c:"Health Informatics",nc:"Assessment Test",app:"Direct University",vpd:null,dead:"15 April – 15 July",sess:"Winter",ger:null,ielts:"B2",late:null,fee:"€582",extra:"Max 2",block:null,motiv:null,dorm:null},
+  {u:"Technische Hochschule Augsburg",c:"International Information Systems",nc:"Aptitude & Assessment",app:"UniAssist & University",vpd:"VPD (Another Uni Accept)",dead:"2 May – 15 July",sess:"Winter",ger:"A2 (no proof needed)",ielts:"B2 (no proof needed)",late:"Late Arrival & Hybrid 1 sem",fee:"€160",extra:"Max 2",block:null,motiv:null,dorm:null},
+  {u:"Technische Hochschule Augsburg",c:"International Management and Engineering",nc:"NC Free",app:"UniAssist & University",vpd:"VPD (Another Uni Accept)",dead:"2 May – 15 July",sess:"Winter",ger:null,ielts:"B2",late:null,fee:"€160",extra:"Max 2",block:null,motiv:null,dorm:null},
+  {u:"Hochschule Landshut",c:"Sustainable Industrial Operations and Business",nc:"NC Free",app:"UniAssist & University",vpd:"VPD",dead:"15 April – July 15",sess:"Winter",ger:null,ielts:"B2",late:"Late Arrival & Hybrid 1 sem",fee:"€124",extra:"5 semesters",block:null,motiv:null,dorm:null},
+  {u:"Hochschule München",c:"Engineering Physics and Data Science",nc:"NC",app:"UniAssist & University",vpd:"VPD (Another Uni Accept)",dead:"02 May – 31 July",sess:"Winter",ger:"A2 (2nd Semester)",ielts:"B2",late:"Late Arrival & Hybrid 1 month",fee:"€85",extra:"Max 2",block:null,motiv:null,dorm:null},
+  {u:"Hochschule München",c:"International Management and Digital Engineering",nc:"NC",app:"UniAssist & University",vpd:"VPD (Another Uni Accept)",dead:"02 May – 31 July",sess:"Winter",ger:"B1 (5th Semester)",ielts:"B2",late:null,fee:"€85",extra:"Max 2",block:null,motiv:null,dorm:null},
+  {u:"Hochschule Kempten",c:"International Engineering",nc:"NC Free",app:"UniAssist & University",vpd:"VPD",dead:"25 April – 31 August",sess:"Winter",ger:"A1 (1st Semester)",ielts:"Min 4.0",late:null,fee:"€602",extra:"Max 2",block:null,motiv:null,dorm:null},
+  {u:"TH Aschaffenburg",c:"Software Design International",nc:"NC Free",app:"UniAssist & University",vpd:"VPD",dead:"2 May – 31 May",sess:"Winter",ger:"A1",ielts:"B2",late:null,fee:"€70",extra:null,block:null,motiv:null,dorm:null},
+  {u:"HTW Berlin",c:"Cyber Security and Business",nc:"NC",app:"UniAssist",vpd:null,dead:"1 April – 30 June",sess:"Winter",ger:null,ielts:"7.0",late:null,fee:"N/A",extra:"No limit",block:null,motiv:null,dorm:null},
+  {u:"HAW Hamburg",c:"Information Engineering",nc:"NC",app:"UniAssist",vpd:"VPD",dead:"1 Apr–31 May / 30 Nov–15 Jan",sess:"Winter & Summer",ger:null,ielts:"Min 6.0",late:null,fee:"€330",extra:null,block:"Not Required",motiv:"YES",dorm:"YES"},
+  {u:"OTH Amberg-Weiden",c:"Digital Technology and Management",nc:"NC Free",app:"UniAssist",vpd:"VPD",dead:"May 1–Jul 15 / Nov 20–Jan 15",sess:"Winter & Summer",ger:"A2",ielts:"Min 5.0",late:null,fee:"€587",extra:"Max 2",block:"Full Block",motiv:null,dorm:"YES"},
+  {u:"OTH Amberg-Weiden",c:"Technical Engineering",nc:"NC Free",app:"UniAssist",vpd:"VPD",dead:"Apr 15–Jun 15 / Nov 1–Dec 15",sess:"Winter & Summer",ger:"A2",ielts:"Min 5.0",late:null,fee:"€587",extra:"Max 2",block:"Full Block",motiv:null,dorm:"YES"},
+  {u:"Technische Hochschule Rosenheim",c:"Applied Artificial Intelligence",nc:"NC Free",app:"UniAssist",vpd:"VPD",dead:"15 Apr – 15 Jul",sess:"Winter",ger:"A2",ielts:"Min 6.0",late:null,fee:"N/A",extra:"Max 2",block:"Full Block",motiv:null,dorm:null},
+  {u:"Technische Hochschule Rosenheim",c:"International Bachelor of Engineering",nc:"NC Free",app:"UniAssist",vpd:"VPD (Another Uni Accept)",dead:"01 June – 15 Jan",sess:"Winter",ger:"A2",ielts:"Min 6.0",late:null,fee:"N/A",extra:"Max 2",block:"Full Block",motiv:null,dorm:"YES"},
+  {u:"South Westphalia University",c:"Business Administration with Informatics",nc:"NC Free",app:"UniAssist",vpd:null,dead:"March – 15 July",sess:"Winter",ger:null,ielts:"Min 6.5",late:null,fee:"N/A",extra:null,block:"Full Block / Job Contract",motiv:null,dorm:null},
+  {u:"Hochschule Kaiserslautern",c:"Mechanical Engineering",nc:"NC Free",app:"UniAssist",vpd:"Online-only",dead:"– 31 August",sess:"Winter",ger:null,ielts:"B2",late:"No docs required",fee:"N/A",extra:"No limit",block:null,motiv:null,dorm:null},
+  {u:"Hamburg University of Technology",c:"Engineering Science",nc:"NC",app:"Direct University",vpd:"VPD (Another Uni Accept)",dead:"1 June – 15 July",sess:"Winter",ger:null,ielts:"Min 6.5",late:null,fee:"€350 Approx",extra:null,block:"Not Required",motiv:null,dorm:null},
+  {u:"Technical University of Munich",c:"Information Engineering (Heilbronn)",nc:"Aptitude & Interview",app:"UniAssist & University",vpd:"VPD",dead:"15 May–15 Jul / 15 Nov–15 Jan",sess:"Winter",ger:null,ielts:null,late:null,fee:"€85 (Heilbronn)",extra:"Max 2",block:null,motiv:"YES",dorm:null},
+  {u:"Technical University of Munich",c:"Management and Data Science",nc:"Aptitude & Interview",app:"UniAssist & University",vpd:"VPD",dead:"15 May – 15 July",sess:"Winter",ger:null,ielts:"6.5 (no cert needed)",late:null,fee:"€85 (Heilbronn)",extra:"Max 2",block:null,motiv:"YES",dorm:null},
+  {u:"Technische Universität Chemnitz",c:"Foundations in Data Science",nc:"NC Free",app:"UniAssist",vpd:"Online-only",dead:"April – 15 July",sess:"Winter",ger:null,ielts:"5.5",late:"Late Arrival & Hybrid 1 sem",fee:"N/A",extra:"4–12 semesters",block:"Half Block / Job Contract (2yr visa)",motiv:null,dorm:"YES"},
+  {u:"OVG University Magdeburg",c:"Engineering Science",nc:"NC Free",app:"UniAssist",vpd:"Online-only",dead:"May 2 – 15 July",sess:"Winter",ger:"A1 recommended",ielts:"6.5",late:null,fee:"€278",extra:"Min 3",block:null,motiv:null,dorm:"YES"},
+  {u:"OVG University Magdeburg",c:"Bilingual Computer Science",nc:"NC Free",app:"UniAssist",vpd:"Online-only",dead:"May 2 – 15 July",sess:"Winter",ger:"A1 recommended",ielts:"6.0",late:null,fee:"€278",extra:"Min 3",block:null,motiv:"YES",dorm:"YES"},
+  {u:"FAU Erlangen-Nürnberg",c:"Artificial Intelligence",nc:"Assessment Test (70% pass)",app:"Direct University",vpd:null,dead:"May 2 – 15 July",sess:"Winter",ger:null,ielts:"B2",late:null,fee:"N/A",extra:null,block:"Not Required",motiv:"YES",dorm:"YES"},
+  {u:"FAU Erlangen-Nürnberg",c:"Autonomy Technologies",nc:"Assessment Test (70% pass)",app:"Direct University",vpd:null,dead:"May 2 – 15 July",sess:"Winter",ger:null,ielts:"B2",late:null,fee:"N/A",extra:null,block:"Not Required",motiv:null,dorm:"YES"},
+  {u:"University of Bremen",c:"Natural Sciences & Sustainability",nc:"NC Free",app:"UniAssist & University",vpd:"VPD",dead:"1 May – 15 July",sess:"Winter",ger:null,ielts:"B2",late:null,fee:"€350 Approx",extra:null,block:null,motiv:null,dorm:"YES"},
+  {u:"Leipzig University",c:"International Physics Studies",nc:"NC Free",app:"UniAssist",vpd:null,dead:"April – 1 September",sess:"Winter",ger:null,ielts:"B2",late:null,fee:"N/A",extra:null,block:null,motiv:null,dorm:null},
+  {u:"University of Duisburg-Essen",c:"Computer Engineering",nc:"NC Free",app:"UniAssist",vpd:null,dead:"May – 15 July",sess:"Winter",ger:"B1",ielts:"B2",late:null,fee:"€320",extra:null,block:null,motiv:null,dorm:null},
+  {u:"RWTH Aachen",c:"Computer Science",nc:"NC",app:"N/A",vpd:null,dead:"– July 15",sess:"Winter",ger:null,ielts:"B2",late:null,fee:"N/A",extra:null,block:null,motiv:null,dorm:null},
+  {u:"TH Köln",c:"Digital Games",nc:"NC Free (Aptitude Test)",app:"UniAssist",vpd:"VPD",dead:"– March 31",sess:"Winter",ger:null,ielts:"No IELTS needed",late:null,fee:"N/A",extra:null,block:null,motiv:null,dorm:null},
+  {u:"University of Passau",c:"Artificial Intelligence",nc:"SAT / TestAs / JEE",app:"UniAssist",vpd:null,dead:"May 2 – 15 July",sess:"Winter",ger:null,ielts:"B2",late:null,fee:"€120",extra:null,block:null,motiv:null,dorm:"YES"},
+  {u:"Saarland University",c:"Computer Science",nc:"SAT / Olympiad / Interview",app:"N/A",vpd:null,dead:"15 Jan – 15 July",sess:"Winter",ger:null,ielts:null,late:null,fee:"N/A",extra:null,block:null,motiv:null,dorm:null},
+  {u:"Saarland University",c:"Cybersecurity",nc:"SAT / Olympiad / Interview",app:"N/A",vpd:null,dead:"15 Jan – 15 July",sess:"Winter",ger:null,ielts:null,late:null,fee:"N/A",extra:null,block:null,motiv:null,dorm:null},
+  {u:"Hof University of Applied Sciences",c:"Engineering Science",nc:"NC Free",app:"UniAssist & University",vpd:"VPD (Another Uni Accept)",dead:"April 15 – May 31",sess:"Winter",ger:"A1",ielts:"Min 6.5",late:"Late Arrival & Hybrid 1 sem",fee:"N/A",extra:null,block:"Full Block / Job Contract",motiv:"YES",dorm:"NO"},
+  {u:"Hof University of Applied Sciences",c:"Computer Science",nc:"NC Free",app:"UniAssist & University",vpd:"VPD (Another Uni Accept)",dead:"Nov 5 – Nov 30",sess:"Summer",ger:"A2",ielts:"Min 6.5",late:null,fee:"N/A",extra:null,block:"Full Block / Job Contract",motiv:"YES",dorm:"NO"},
+  {u:"Schmalkalden University",c:"Mechatronics and Robotics",nc:"NC Free",app:"N/A",vpd:null,dead:"Oct 1 – Nov 15",sess:"Summer",ger:null,ielts:"Min 6.5",late:null,fee:"N/A",extra:null,block:null,motiv:null,dorm:null},
+  {u:"HAW Hamburg",c:"Mechanical Engineering",nc:"N/A",app:"UniAssist & University",vpd:"VPD",dead:"1 Oct – 30 Nov",sess:"Summer",ger:null,ielts:"Min 6.0",late:null,fee:"€330",extra:null,block:null,motiv:null,dorm:null},
+  {u:"University of Europe for Applied Sciences",c:"Software Engineering",nc:"N/A",app:"Direct",vpd:null,dead:"December 2024",sess:"Summer",ger:null,ielts:"Min 5.5",late:null,fee:"N/A",extra:null,block:null,motiv:null,dorm:null},
+  {u:"Hochschule Magdeburg-Stendal",c:"Sustainable Resources, Engineering & Management",nc:"NC Free",app:"UniAssist",vpd:null,dead:"1 Oct – 30 Nov",sess:"Summer",ger:null,ielts:"Min 5.0",late:null,fee:"N/A",extra:null,block:null,motiv:null,dorm:"YES"},
+];
+
+let bookmarks = JSON.parse(localStorage.getItem('studyde-bookmarks') || '[]');
+let notes = JSON.parse(localStorage.getItem('studyde-notes') || '{}');
+let statuses = JSON.parse(localStorage.getItem('studyde-statuses') || '{}');
+let compareList = [];
+let currentView = 'grid';
+let activeFilters = { nc: 'all', session: 'all' };
+let activeExtras = new Set();
+let currentModalIdx = null;
+
+function getKey(item) { return `${item.u}||${item.c}`; }
+
+function isBookmarked(item) { return bookmarks.includes(getKey(item)); }
+function toggleBookmark(e, idx) {
+  e.stopPropagation();
+  const item = FILTERED[idx];
+  const key = getKey(item);
+  if (bookmarks.includes(key)) bookmarks = bookmarks.filter(k => k !== key);
+  else bookmarks.push(key);
+  localStorage.setItem('studyde-bookmarks', JSON.stringify(bookmarks));
+  updateHeaderStats();
+  renderCards();
+}
+
+function toggleCompare(e, idx) {
+  e.stopPropagation();
+  const item = FILTERED[idx];
+  const key = getKey(item);
+  if (compareList.find(i => getKey(i) === key)) {
+    compareList = compareList.filter(i => getKey(i) !== key);
+  } else {
+    if (compareList.length >= 3) { alert('Compare up to 3 courses at a time'); return; }
+    compareList.push(item);
+  }
+  updateCompareBar();
+  renderCards();
+}
+
+function updateCompareBar() {
+  const bar = document.getElementById('compareBar');
+  const items = document.getElementById('compareItems');
+  const count = document.getElementById('compareCount');
+  count.textContent = compareList.length;
+  if (compareList.length === 0) { bar.classList.remove('visible'); return; }
+  bar.classList.add('visible');
+  items.innerHTML = compareList.map(item =>
+    `<div class="compare-item">${item.c} <span class="compare-item-remove" onclick="removeCompare('${getKey(item)}')">✕</span></div>`
+  ).join('');
+}
+function removeCompare(key) {
+  compareList = compareList.filter(i => getKey(i) !== key);
+  updateCompareBar(); renderCards();
+}
+function clearCompare() { compareList = []; updateCompareBar(); renderCards(); }
+
+function openCompareModal() {
+  if (compareList.length < 2) { alert('Select at least 2 courses to compare'); return; }
+  const fields = [
+    ['University','u'],['Course','c'],['NC Status','nc'],['Application Via','app'],
+    ['VPD','vpd'],['Deadline','dead'],['Session','sess'],['German Req','ger'],
+    ['IELTS','ielts'],['Late Arrival','late'],['Tuition/Sem','fee'],['Extra Sem','extra'],
+    ['Block Money','block'],['Motivation Letter','motiv'],['Dorm/Hall','dorm']
+  ];
+  const body = document.getElementById('compareBody');
+  let html = '<div style="overflow-x:auto;"><table class="compare-table"><tbody>';
+  fields.forEach(([label, key]) => {
+    const vals = compareList.map(i => i[key] || '—');
+    const allSame = vals.every(v => v === vals[0]);
+    html += `<tr${allSame ? '' : ' class="highlight-row"'}>
+      <th>${label}</th>
+      ${vals.map(v => `<td>${v}</td>`).join('')}
+    </tr>`;
+  });
+  html += '</tbody></table></div>';
+  body.innerHTML = html;
+  document.getElementById('compareOverlay').classList.add('open');
+}
+function closeCompareModal(e) {
+  if (e.target === document.getElementById('compareOverlay'))
+    document.getElementById('compareOverlay').classList.remove('open');
+}
+
+function getNcClass(nc) {
+  if (!nc || nc === 'N/A') return '';
+  const n = nc.toLowerCase();
+  if (n.includes('free')) return 'ncfree';
+  if (n.includes('nc') && !n.includes('free')) return 'nc';
+  return 'assess';
+}
+function getSessionClass(sess) {
+  if (!sess) return '';
+  const s = sess.toLowerCase();
+  if (s.includes('&') || s.includes('and')) return 'both';
+  if (s.includes('summer')) return 'summer';
+  return 'winter';
+}
+
+function ncBadge(nc) {
+  const cl = getNcClass(nc);
+  const label = cl === 'ncfree' ? '✓ NC Free' : cl === 'nc' ? '⚠ NC Required' : nc;
+  return `<span class="badge badge-${cl}">${label}</span>`;
+}
+function sessBadge(sess) {
+  const cl = getSessionClass(sess);
+  const icon = cl === 'winter' ? '❄' : cl === 'summer' ? '☀' : '◈';
+  return `<span class="badge badge-${cl}">${icon} ${sess}</span>`;
+}
+
+let FILTERED = [];
+function getFiltered() {
+  let data = [...RAW_DATA];
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  if (q) {
+    data = data.filter(item =>
+      Object.values(item).some(v => v && String(v).toLowerCase().includes(q))
+    );
+  }
+  if (activeFilters.nc !== 'all') {
+    data = data.filter(item => {
+      const cl = getNcClass(item.nc);
+      return cl === activeFilters.nc;
+    });
+  }
+  if (activeFilters.session !== 'all') {
+    data = data.filter(item => {
+      const cl = getSessionClass(item.sess);
+      if (activeFilters.session === 'both') return cl === 'both';
+      if (activeFilters.session === 'winter') return cl === 'winter' || cl === 'both';
+      if (activeFilters.session === 'summer') return cl === 'summer' || cl === 'both';
+      return true;
+    });
+  }
+  if (activeExtras.has('dorm')) data = data.filter(i => i.dorm && i.dorm.toLowerCase().includes('yes'));
+  if (activeExtras.has('late')) data = data.filter(i => i.late && i.late.toLowerCase().includes('late arrival'));
+  if (activeExtras.has('motiv')) data = data.filter(i => i.motiv);
+  if (activeExtras.has('bookmarked')) data = data.filter(i => isBookmarked(i));
+
+  const sort = document.getElementById('sortSelect').value;
+  if (sort === 'uni') data.sort((a,b) => a.u.localeCompare(b.u));
+  else if (sort === 'course') data.sort((a,b) => a.c.localeCompare(b.c));
+  else if (sort === 'fee-asc') data.sort((a,b) => feeNum(a.fee) - feeNum(b.fee));
+  else if (sort === 'fee-desc') data.sort((a,b) => feeNum(b.fee) - feeNum(a.fee));
+
+  return data;
+}
+function feeNum(fee) {
+  if (!fee || fee === 'N/A') return 999999;
+  const n = parseFloat(fee.replace(/[^\d.]/g,''));
+  return isNaN(n) ? 999999 : n;
+}
+
+function renderCards() {
+  FILTERED = getFiltered();
+  const grid = document.getElementById('cardsGrid');
+  const empty = document.getElementById('emptyState');
+  document.getElementById('resultCount').textContent = FILTERED.length;
+
+  if (FILTERED.length === 0) {
+    grid.innerHTML = ''; empty.style.display = 'block'; return;
+  }
+  empty.style.display = 'none';
+
+  grid.innerHTML = FILTERED.map((item, idx) => {
+    const key = getKey(item);
+    const bk = bookmarks.includes(key);
+    const inCompare = compareList.some(i => getKey(i) === key);
+    const status = statuses[key];
+    const statusBadge = status ? `<span class="application-status status-${status}">${status.replace('-',' ')}</span>` : '';
+
+    return `<div class="uni-card${bk?' bookmarked':''}" onclick="openModal(${idx})" style="animation-delay:${Math.min(idx*0.025,0.5)}s">
+      <div class="card-top">
+        <div class="card-actions">
+          <div class="tooltip-wrap">
+            <button class="icon-btn${inCompare?' active':''}" onclick="toggleCompare(event,${idx})" title="Compare">⊕</button>
+            <span class="tooltip-text">${inCompare?'Remove from':'Add to'} compare</span>
+          </div>
+          <div class="tooltip-wrap">
+            <button class="icon-btn${bk?' bookmarked-btn':''}" onclick="toggleBookmark(event,${idx})" title="Save">⭐</button>
+            <span class="tooltip-text">${bk?'Remove save':'Save'}</span>
+          </div>
+        </div>
+        <div class="card-uni-name">${item.u}</div>
+        <div class="card-course">${item.c}</div>
+        <div class="badges">
+          ${ncBadge(item.nc)}
+          ${sessBadge(item.sess)}
+          ${item.dorm && item.dorm.toLowerCase().includes('yes') ? '<span class="badge badge-dorm">🏠 Dorm</span>' : ''}
+          ${item.motiv ? '<span class="badge badge-motiv">✉ Motiv. Letter</span>' : ''}
+          ${item.late ? '<span class="badge badge-late">⏰ Late OK</span>' : ''}
+          ${item.vpd && item.vpd.toLowerCase().includes('online') ? '<span class="badge badge-online">🌐 Online</span>' : ''}
+          ${statusBadge}
+        </div>
+      </div>
+      <div class="card-divider"></div>
+      <div class="card-details">
+        <div class="detail-item">
+          <div class="detail-key">Application</div>
+          <div class="detail-val">${item.app || '—'}</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-key">Tuition / Sem</div>
+          <div class="detail-val fee">${item.fee || 'N/A'}</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-key">IELTS</div>
+          <div class="detail-val">${item.ielts || '—'}</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-key">German Req</div>
+          <div class="detail-val">${item.ger || 'None'}</div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="deadline-display">
+          <span class="deadline-icon">📅</span>
+          <span>${item.dead || 'See website'}</span>
+        </div>
+        ${notes[key] ? '<span style="font-size:0.7rem;color:var(--text-muted)">📝 Has notes</span>' : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openModal(idx) {
+  currentModalIdx = idx;
+  const item = FILTERED[idx];
+  const key = getKey(item);
+  document.getElementById('mUni').textContent = item.u;
+  document.getElementById('mCourse').textContent = item.c;
+  document.getElementById('mBadges').innerHTML = [
+    ncBadge(item.nc), sessBadge(item.sess),
+    item.dorm && item.dorm.toLowerCase().includes('yes') ? '<span class="badge badge-dorm">🏠 Dorm Available</span>' : '',
+    item.motiv ? '<span class="badge badge-motiv">✉ Motivation Letter Required</span>' : '',
+    item.late ? '<span class="badge badge-late">⏰ Late Arrival OK</span>' : ''
+  ].join('');
+
+  document.getElementById('mAppDetails').innerHTML = field('Admission Type', item.nc) + field('Application Via', item.app) + field('VPD / Portal', item.vpd || '—') + field('Deadline', item.dead) + field('Session', item.sess) + field('Extra Semesters', item.extra || '—');
+  document.getElementById('mLangDetails').innerHTML = field('IELTS Score', item.ielts || '—') + field('German Required', item.ger || 'None required') + field('Motivation Letter', item.motiv ? '✓ Required' : 'Not required');
+  document.getElementById('mFinDetails').innerHTML = field('Tuition / Semester', item.fee || 'N/A') + field('Block Money (2nd year)', item.block || '—') + field('Dorm / Hall', item.dorm || '—') + field('Late Arrival', item.late || 'Not available');
+
+  // Status
+  const st = statuses[key] || '';
+  document.getElementById('mStatusSelect').value = st;
+  document.getElementById('mNotes').value = notes[key] || '';
+
+  const extra = document.getElementById('mExtraSection');
+  extra.innerHTML = '';
+
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function field(k, v) {
+  return `<div class="modal-field"><div class="modal-field-key">${k}</div><div class="modal-field-val">${v}</div></div>`;
+}
+
+function saveNote() {
+  if (currentModalIdx === null) return;
+  const item = FILTERED[currentModalIdx];
+  const key = getKey(item);
+  const val = document.getElementById('mNotes').value;
+  if (val.trim()) notes[key] = val; else delete notes[key];
+  localStorage.setItem('studyde-notes', JSON.stringify(notes));
+}
+function saveStatus() {
+  if (currentModalIdx === null) return;
+  const item = FILTERED[currentModalIdx];
+  const key = getKey(item);
+  const val = document.getElementById('mStatusSelect').value;
+  if (val) statuses[key] = val; else delete statuses[key];
+  localStorage.setItem('studyde-statuses', JSON.stringify(statuses));
+  renderCards();
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModalBtn();
+}
+function closeModalBtn() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  currentModalIdx = null;
+}
+
+function toggleFilter(el, type) {
+  document.querySelectorAll(`[data-filter="${type}"]`).forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  activeFilters[type] = el.dataset.val;
+  renderCards();
+}
+function toggleExtra(el) {
+  const val = el.dataset.val;
+  if (activeExtras.has(val)) { activeExtras.delete(val); el.classList.remove('active'); }
+  else { activeExtras.add(val); el.classList.add('active'); }
+  renderCards();
+}
+
+function setView(v) {
+  currentView = v;
+  const grid = document.getElementById('cardsGrid');
+  if (v === 'list') { grid.classList.add('list-view'); document.getElementById('btnList').classList.add('active'); document.getElementById('btnGrid').classList.remove('active'); }
+  else { grid.classList.remove('list-view'); document.getElementById('btnGrid').classList.add('active'); document.getElementById('btnList').classList.remove('active'); }
+}
+
+function updateStats() {
+  const total = RAW_DATA.length;
+  const ncfree = RAW_DATA.filter(i => getNcClass(i.nc) === 'ncfree').length;
+  const dorm = RAW_DATA.filter(i => i.dorm && i.dorm.toLowerCase().includes('yes')).length;
+  const late = RAW_DATA.filter(i => i.late && i.late.toLowerCase().includes('late arrival')).length;
+  const unis = new Set(RAW_DATA.map(i => i.u)).size;
+
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statNCFree').textContent = ncfree;
+  document.getElementById('statDorm').textContent = dorm;
+  document.getElementById('statLate').textContent = late;
+  document.getElementById('hTotalCourses').textContent = total;
+  document.getElementById('hTotalUni').textContent = unis;
+  document.getElementById('hNcFree').textContent = ncfree;
+  updateHeaderStats();
+}
+function updateHeaderStats() {
+  document.getElementById('hBookmarked').textContent = bookmarks.length;
+}
+
+// Set first NC filter as active
+document.querySelector('[data-filter="nc"][data-val="all"]').classList.add('active');
+
+document.getElementById('searchInput').addEventListener('input', renderCards);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModalBtn(); document.getElementById('compareOverlay').classList.remove('open'); } });
+
+updateStats();
+renderCards();
+</script>
+</body>
+</html>
